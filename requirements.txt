@@ -1,3 +1,4 @@
+python=3.9.0
 dash==2.7.0
 dash_bootstrap_components
 plotly==5.11.0
