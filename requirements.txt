@@ -1,5 +1,7 @@
 dash==2.7.0
 dash_bootstrap_components
+plotly
 plotly.express
 pandas
 gunicorn
+numpy
