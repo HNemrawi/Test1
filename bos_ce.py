@@ -44,7 +44,7 @@ Title = html.H1(
            'height': '20%', 'width': '100%', 'float': 'center',
            'position': 'center'})
 
-app = Dash(external_stylesheets=[dbc.themes.MINTY])
+app = Dash(__name__,external_stylesheets=[dbc.themes.MINTY])
 server=app.server
 
 app.layout = dbc.Container([
