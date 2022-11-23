@@ -5,8 +5,8 @@ import pandas as pd
 from dash.exceptions import PreventUpdate
 import plotly.subplots as sp
 
-bosce = pd.read_csv('App.csv')
-
+url='https://raw.githubusercontent.com/HNemrawi/Test1/main/App.csv'
+bosce = pd.read_csv(url, index_col=0,converters={'Personal ID': str})
 
 color_discrete_map={"White": "#0819AB",
                     "Black, African American, or African": "#09A0B2",
