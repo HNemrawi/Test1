@@ -2,7 +2,7 @@ from dash import Dash, html, dcc, Input, Output, State
 import dash_bootstrap_components as dbc
 import plotly.express as px
 import pandas as pd
-#from dash.exceptions import PreventUpdate
+from dash.exceptions import PreventUpdate
 
 url='https://raw.githubusercontent.com/HNemrawi/Test1/main/App.csv'
 bosce = pd.read_csv(url, index_col=0,converters={'Rank on List': int,'Personal ID': str})
@@ -135,9 +135,9 @@ app.layout = dbc.Container([
     State('coulmn-name', 'value'),
     State('top-bottom', 'value'))
 def Update_graph(button_click, household_type, project_type, variable_name, top_bottom, then=None):
-    #my_list=[household_type, project_type, variable_name, top_bottom]
-    #if None in my_list:
-        #raise PreventUpdate
+    my_list=[household_type, project_type, variable_name, top_bottom]
+    if None in my_list:
+        raise PreventUpdate
     msk = (bosce['Household Type'] == household_type) & \
           (bosce['Project Type'] == project_type)
     filtered_bosce = bosce[msk]
@@ -168,9 +168,9 @@ def Update_graph(button_click, household_type, project_type, variable_name, top_
     State('project-type', 'value'),
 )
 def update_scatter(button_click, household_type, project_type):
-    #my_list = [household_type, project_type]
-    #if None in my_list:
-        #raise PreventUpdate
+    my_list = [household_type, project_type]
+    if None in my_list:
+        raise PreventUpdate
     msk = (bosce['Household Type'] == household_type) & \
           (bosce['Project Type'] == project_type)
     filtered_bosce = bosce[msk]
