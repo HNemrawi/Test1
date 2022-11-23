@@ -52,7 +52,7 @@ Title=html.H1(
                    'position': 'center'})
 
 app = Dash(external_stylesheets=[dbc.themes.MINTY])
-
+server=app.server
 
 app.layout = dbc.Container([
     dbc.Row(
@@ -189,4 +189,4 @@ def update_scatter (button_click, household_type, project_type):
     return fig3
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False)
