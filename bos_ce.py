@@ -4,9 +4,9 @@ import plotly.express as px
 import pandas as pd
 from dash.exceptions import PreventUpdate
 
-# url='https://raw.githubusercontent.com/HNemrawi/Test1/main/App.csv'
-# bosce = pd.read_csv(url, index_col=0,converters={'Personal ID': str})
-bosce = pd.read_csv('App.csv', converters={'Rank on List': int,'Personal ID': str})
+url='https://raw.githubusercontent.com/HNemrawi/Test1/main/App.csv'
+bosce = pd.read_csv(url, index_col=0,converters={'Rank on List': int,'Personal ID': str})
+#bosce = pd.read_csv('App.csv', converters={'Rank on List': int,'Personal ID': str})
 
 color_discrete_map = {"White": "#0819AB",
                       "Black, African American, or African": "#09A0B2",
@@ -45,7 +45,7 @@ Title = html.H1(
            'position': 'center'})
 
 app = Dash(external_stylesheets=[dbc.themes.MINTY])
-# server=app.server
+server=app.server
 
 app.layout = dbc.Container([
     dbc.Row(
@@ -184,4 +184,4 @@ def update_scatter(button_click, household_type, project_type):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False)
