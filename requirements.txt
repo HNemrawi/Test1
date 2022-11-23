@@ -1,0 +1,6 @@
+dash==2.7.0
+dash_bootstrap_components
+plotly.express
+pandas
+dash.exceptions
+gunicorn
