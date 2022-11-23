@@ -2,8 +2,6 @@ from dash import Dash, html, dcc, Input, Output, State
 import dash_bootstrap_components as dbc
 import plotly.express as px
 import pandas as pd
-from dash.exceptions import PreventUpdate
-import plotly.subplots as sp
 
 url='https://raw.githubusercontent.com/HNemrawi/Test1/main/App.csv'
 bosce = pd.read_csv(url, index_col=0,converters={'Personal ID': str})
@@ -143,32 +141,27 @@ app.layout = dbc.Container([
     State('coulmn-name','value'),
     State('top-bottom','value'))
 def Update_graph (button_click, household_type, project_type, variable_name, top_bottom, then=None):
-    my_list=[household_type,project_type,variable_name,top_bottom]
-    if None in my_list:
-        raise PreventUpdate
-    msk=(bosce['Household Type']== household_type) & \
+  msk=(bosce['Household Type']== household_type) & \
         (bosce['Project Type']== project_type)
-    filtered_bosce = bosce[msk]
-    Top = filtered_bosce.nsmallest(top_bottom, 'Rank on List')
-    Top = Top.groupby([variable_name])['Personal ID'].count().reset_index(name="count")
-    Top['Percent'] = Top['count'] / Top['count'].sum()
-    Bottom = filtered_bosce.nlargest(top_bottom, 'Rank on List')
-    Bottom = Bottom.groupby([variable_name])['Personal ID'].count().reset_index(name="count")
-    Bottom['Percent'] = Bottom['count'] / Bottom['count'].sum()
-    new_line = '<br>'
-    fig1 = px.bar(Top, x=variable_name, y='Percent', color=variable_name , text='count', template="plotly_white",
+  filtered_bosce = bosce[msk]
+  Top = filtered_bosce.nsmallest(top_bottom, 'Rank on List')
+  Top = Top.groupby([variable_name])['Personal ID'].count().reset_index(name="count")
+  Top['Percent'] = Top['count'] / Top['count'].sum()
+  Bottom = filtered_bosce.nlargest(top_bottom, 'Rank on List')
+  Bottom = Bottom.groupby([variable_name])['Personal ID'].count().reset_index(name="count")
+  Bottom['Percent'] = Bottom['count'] / Bottom['count'].sum()
+  new_line = '<br>'
+  fig1 = px.bar(Top, x=variable_name, y='Percent', color=variable_name , text='count', template="plotly_white",
                  color_discrete_map=color_discrete_map,height=500,
                   title=f'{variable_name} Breakdown of Top {top_bottom}{new_line}{household_type} on the {project_type} List')
-    fig1.update_layout(showlegend=False)
-    fig1.layout.yaxis.tickformat = ',.0%'
-
-    fig2 = px.bar(Bottom, x=variable_name, y='Percent', color=variable_name, text='count', template="plotly_white",
+  fig1.update_layout(showlegend=False)
+  fig1.layout.yaxis.tickformat = ',.0%'
+  fig2 = px.bar(Bottom, x=variable_name, y='Percent', color=variable_name, text='count', template="plotly_white",
                   color_discrete_map=color_discrete_map, height=500,
                   title=f'{variable_name} Breakdown of Bottom {top_bottom}{new_line}{household_type} on the {project_type} List')
-    fig2.update_layout(showlegend=False)
-    fig2.layout.yaxis.tickformat = ',.0%'
-
-    return fig1,fig2
+  fig2.update_layout(showlegend=False)
+  fig2.layout.yaxis.tickformat = ',.0%'
+  return fig1,fig2
 
 @app.callback(
     Output('scatter-plot','figure'),
@@ -177,16 +170,16 @@ def Update_graph (button_click, household_type, project_type, variable_name, top
     State('project-type','value'),
 )
 def update_scatter (button_click, household_type, project_type):
-    msk = (bosce['Household Type'] == household_type) & \
+  msk = (bosce['Household Type'] == household_type) & \
           (bosce['Project Type'] == project_type)
-    filtered_bosce = bosce[msk]
-    fig3=px.scatter(filtered_bosce, x="Rank on List", y="VI Score", animation_frame="Project Type",
+  filtered_bosce = bosce[msk]
+  fig3=px.scatter(filtered_bosce, x="Rank on List", y="VI Score", animation_frame="Project Type",
                animation_group="Personal ID",
                color="Race", hover_name="Race", height=400, width=970, template="plotly_white",
                title=f'Relation between VI Score and Rank on the {project_type} List for {household_type}',
                log_x=True, size_max=55, color_discrete_map=color_discrete_map)
-    fig3.update_layout(xaxis=dict(autorange="reversed"))
-    return fig3
+  fig3.update_layout(xaxis=dict(autorange="reversed"))
+  return fig3
 
 if __name__ == '__main__':
-    app.run_server(debug=False)
+  app.run_server(debug=False)
