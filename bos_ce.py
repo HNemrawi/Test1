@@ -4,9 +4,8 @@ import plotly.express as px
 import pandas as pd
 from dash.exceptions import PreventUpdate
 
-url='https://raw.githubusercontent.com/HNemrawi/Test1/main/App.csv'
-bosce = pd.read_csv(url, index_col=0,converters={'Rank on List': int,'Personal ID': str})
-#bosce = pd.read_csv('App.csv', converters={'Rank on List': int,'Personal ID': str})
+
+bosce = pd.read_csv("assets/App.csv", converters={'Rank on List': int,'Personal ID': str})
 
 color_discrete_map = {"White": "#0819AB",
                       "Black, African American, or African": "#09A0B2",
