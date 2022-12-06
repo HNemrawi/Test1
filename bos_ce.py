@@ -165,9 +165,10 @@ def Update_graph(button_click, household_type, project_type, variable_name, top_
     Input('submit-val', 'n_clicks'),
     State('household-type', 'value'),
     State('project-type', 'value'),
+    State('coulmn-name', 'value')
 )
-def update_scatter(button_click, household_type, project_type):
-    my_list = [household_type, project_type]
+def update_scatter(button_click, household_type, project_type,variable_name):
+    my_list = [household_type, project_type, variable_name]
     if None in my_list:
         raise PreventUpdate
     msk = (bosce['Household Type'] == household_type) & \
@@ -175,7 +176,7 @@ def update_scatter(button_click, household_type, project_type):
     filtered_bosce = bosce[msk]
     fig3 = px.scatter(filtered_bosce, x="Rank on List", y="VI Score", animation_frame="Project Type",
                       animation_group="Personal ID",
-                      color="Race", hover_name="Race", height=400, width=970, template="plotly_white",
+                      color=variable_name, hover_name=variable_name, height=400, width=970, template="plotly_white",
                       title=f'Relation between VI Score and Rank on the {project_type} List for {household_type}',
                       log_x=True, size_max=55, color_discrete_map=color_discrete_map)
     fig3.update_layout(xaxis=dict(autorange="reversed"))
